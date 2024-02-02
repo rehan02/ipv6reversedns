@@ -1,42 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1>JavaScript Strings reverse 2001488838857124a01040a405</h1>
-<p id="demo"></p>
-<form action="">
-    <p><label for="w3review">Review of W3Schools:</label></p>
-    <textarea id="input1" name="input1" rows="25" cols="60" placeholder="Enter the string to reverse"></textarea>
-    <br>
-    <br><input type="button" id="btn1" value="Submit"> 
-  </form>
-  <p id="out1"> </p>
-
-<script>
-const input1=document.getElementById('input1')
-const btn1=document.getElementById('btn1')
-const out1=document.getElementById('out1')
-
-btn1.addEventListener('click',fun1)
-
-function fun1() {
-    out1.innerHTML=ipv6Reverse(input1.value)
-}
-
-function ipv6Reverse(x) {
-    arr=x.split("\n")
-    let str1=""
-    for(let i=0;i<arr.length;i++){
-        arr2=arr[i].replaceAll(":","").split("")
-        let str2=""
-        for(j=arr2.length-1;j>15;j--){
-            str2=str2+arr2[j]+"."
-        }
-
-        str1=str1+str2.slice(0,-1)+"<br>"     
-    }
-    return str1
-}
-
-</script>
+<h1>test header JavaScript Strings reverse</h1>
+<p id="demo"> this is test paragraph</p>
 </body>
 </html>
