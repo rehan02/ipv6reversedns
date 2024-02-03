@@ -1,42 +1,45 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
-<body>
-<h1>Paste the list of full length IPv6 addresses to generate 4 byte of the reverse DNS from the end</h1>
-<p id="demo"></p>
-<form action="">
-    <p><label for="ipv6">IPv6 list to reverse DNS </label></p>
-    <textarea id="input1" name="input1" rows="25" cols="60" placeholder="Enter the IPv6 list each in one line"></textarea>
-    <br>
+<body> 
+<h2> Paste the output of "show server list ipv6" from CSCF OA to generate the full length IPv6 List </h2>
+<form action="?">
+    <textarea id="text1" name="text1" placeholder="Paste the output of 'show server list ipv6' from CSCF OA to generate the full length IPv6 List" rows="20" cols="100" ></textarea>
     <br><input type="button" id="btn1" value="Submit"> 
-  </form>
-  <p id="out1"> </p>
+    <p class="output" id="out1"> </p>
+</form>
 
 <script>
-const input1=document.getElementById('input1')
+const text1=document.getElementById('text1')
 const btn1=document.getElementById('btn1')
 const out1=document.getElementById('out1')
 
-btn1.addEventListener('click',fun1)
+btn1.addEventListener('click',func1)
 
-function fun1() {
-    out1.innerHTML=ipv6Reverse(input1.value)
+function func1() {
+    //text2=text1.value
+    out1.innerHTML= out2ipv6list(text1.value)
 }
 
-function ipv6Reverse(x) {
-    arr=x.split("\n")
-    let str1=""
-    for(let i=0;i<arr.length;i++){
-        arr2=arr[i].replaceAll(":","").split("")
-        let str2=""
-        for(j=arr2.length-1;j>15;j--){
-            str2=str2+arr2[j]+"."
+function out2ipv6list(text){
+    const myArr=text.split("\n")
+    wholetxt=""
+    for(i=0;i<myArr.length;i++){
+        let arr=[], j=0, xx="" , xy=""
+        if (myArr[i].includes("EBIPA")) {
+                arr2=myArr[i].split(":")
+                //aar3=myArr[i].replace(":","").split("")
+            for(j=0;j<arr2.length;j++){
+                xx=xx+arr2[j].padStart(4,"0").concat(":").replace(" EBIPA","")
+                xy=xy+arr2[j].padStart(4,"0").replace(" EBIPA","").trim()
         }
-
-        str1=str1+str2.slice(0,-1)+"<br>"     
+        j=j+1
+        xx=xx.slice(0,-1)
+    wholetxt+=xx+" - "+xy.split("").reverse().join(".")+"<br>"
     }
-    return str1
+    }
+    return wholetxt
 }
 
 </script>
-</body>
+</body>    
 </html>
