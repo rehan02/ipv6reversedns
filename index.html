@@ -1,9 +1,9 @@
 <!DOCTYPE html> 
 <html>
 <body> 
-<h2> Paste the output of "show server list ipv6" from OA to generate the full length IPv6 List </h2>
+<h2> Paste the output of "show server list ipv6" from CSCF OA to generate the full length IPv6 List</h2>
 <form action="?">
-    <textarea id="text1" name="text1" placeholder="Paste the output of 'show server list ipv6' from OA to generate the full length IPv6 List" rows="20" cols="100" ></textarea>
+    <textarea id="text1" name="text1" placeholder="Enter the IPv6 address(s). If more than one then enter one line each" rows="20" cols="100" ></textarea>
     <br><input type="button" id="btn1" value="Submit"> 
     <p class="output" id="out1"> </p>
 </form>
@@ -20,25 +20,35 @@ function func1() {
     out1.innerHTML= out2ipv6list(text1.value)
 }
 
-function out2ipv6list(text){
-    const myArr=text.split("\n")
-    wholetxt=""
-    for(i=0;i<myArr.length;i++){
-        let arr=[], j=0, xx="" , xy=""
-        if (myArr[i].includes("EBIPA")) {
-                arr2=myArr[i].split(":")
-                //aar3=myArr[i].replace(":","").split("")
-            for(j=0;j<arr2.length;j++){
-                xx=xx+arr2[j].padStart(4,"0").concat(":").replace(" EBIPA","")
-                xy=xy+arr2[j].padStart(4,"0").replace(" EBIPA","").trim()
+function out2ipv6list(text){ 
+    myArr=text.split("\n") 
+    let text2=""
+    let text3=""
+    for (i=0;i<myArr.length;i++) {
+        if (myArr[i].includes("EBIPA")){
+            text2=text2+padIPv6( myArr[i].replace("EBIPA","").trim())+" -   "+padIPv6(myArr[i].replace("EBIPA","").trim()).replaceAll(":","").split("").reverse().join(".")+"<br>"
         }
-        j=j+1
-        xx=xx.slice(0,-1)
-    wholetxt+=xx+" - "+xy.split("").reverse().join(".")+"<br>"
     }
-    }
-    return wholetxt
+    return text2
 }
+
+var countColons = function (x) {
+    var n = 0;
+    x.replace(/:/g, function (c) { n++; });
+    return n;
+};
+
+var padIPv6 = function (ip) {
+    return ip
+    .replace(/::/, function (two) {
+        return ':' + Array((7 - countColons(ip)) + 1).join(':') + ':';
+    })
+    .split(':')
+    .map(function (x) {
+        return Array(4-x.length).fill('0').join("") + x;
+    })
+    .join(':');
+};
 
 </script>
 </body>    
