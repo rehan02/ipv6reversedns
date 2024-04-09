@@ -23,7 +23,6 @@ function func1() {
 function out2ipv6list(text){ 
     myArr=text.split("\n") 
     let text2=""
-    let text3=""
     for (i=0;i<myArr.length;i++) {
         if (myArr[i].includes("EBIPA")){
             text2=text2+padIPv6( myArr[i].replace("EBIPA","").trim())+" -   "+padIPv6(myArr[i].replace("EBIPA","").trim()).replaceAll(":","").split("").reverse().join(".")+"<br>"
